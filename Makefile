@@ -13,7 +13,7 @@ BIN_INC_FILES = $(wildcard $(INC_DIR)/*.h)
 TST_SRC_FILES = $(wildcard $(TST_DIR)/*.c)
 TST_OBJ_FILES = $(patsubst %.c, $(OBJ_DIR)/%.o, $(TST_SRC_FILES))
 
-CFLAGS    = -std=c11 -Wall -Wextra -Werror #-pedantic
+CFLAGS    = -std=c11 -g -Wall -Wextra -Werror #-pedantic
 IFLAGS    = -I $(INC_DIR)
 TFLAGS    = -lcriterion $(TARGET)
 
