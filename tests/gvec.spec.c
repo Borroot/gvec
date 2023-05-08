@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 #include <criterion/new/assert.h>
-#include <gvec_insitu.h>
+#include <gvec.h>
 #include <stdint.h>
 #include <errno.h>
 #include <limits.h>
@@ -52,7 +52,7 @@ Test(gvec_insitu, set_sz)
 	gveci v;
 	gveci_init(&v, size, bytes);
 
-	/* populate the vector alternating SIZE_MAX and 0 */
+	/* populate the vector alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			gveci_set(&v, i, (void *)&max);
@@ -60,7 +60,7 @@ Test(gvec_insitu, set_sz)
 			gveci_set(&v, i, (void *)&min);
 	}
 
-	/* check the buffer for alternating 1's and 0's */
+	/* check the buffer for alternating max and min */
 	for (size_t i = 0; i < size * bytes; i++) {
 		if ((i / bytes) % 2 == 0)
 			cr_assert(eq(chr, v.buffer[i], 0xff));
@@ -82,7 +82,7 @@ Test(gvec_insitu, get_sz)
 	gveci v;
 	gveci_init(&v, size, bytes);
 
-	/* populate the vector alternating SIZE_MAX and 0 */
+	/* populate the vector alternating max and min */
 	for (size_t i = 0; i < size * bytes; i++) {
 		if ((i / bytes) % 2 == 0)
 			v.buffer[i] = 0xff;
@@ -90,7 +90,7 @@ Test(gvec_insitu, get_sz)
 			v.buffer[i] = 0x00;
 	}
 
-	/* check the buffer for alternating 1's and 0's */
+	/* check the buffer for alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			cr_assert(eq(sz, *(size_t *)gveci_get(&v, i), max));
@@ -112,7 +112,7 @@ Test(gvec_insitu, set_and_get_sz)
 	gveci v;
 	gveci_init(&v, size, bytes);
 
-	/* populate the vector alternating SIZE_MAX and 0 */
+	/* populate the vector alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			gveci_set(&v, i, (void *)&max);
@@ -120,7 +120,7 @@ Test(gvec_insitu, set_and_get_sz)
 			gveci_set(&v, i, (void *)&min);
 	}
 
-	/* check the buffer for alternating 1's and 0's */
+	/* check the buffer for alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			cr_assert(eq(sz, *(size_t *)gveci_get(&v, i), max));
@@ -142,7 +142,7 @@ Test(gvec_insitu, set_and_get_char)
 	gveci v;
 	gveci_init(&v, size, bytes);
 
-	/* populate the vector alternating SIZE_MAX and 0 */
+	/* populate the vector alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			gveci_set(&v, i, (void *)&max);
@@ -150,7 +150,7 @@ Test(gvec_insitu, set_and_get_char)
 			gveci_set(&v, i, (void *)&min);
 	}
 
-	/* check the buffer for alternating 1's and 0's */
+	/* check the buffer for alternating max and min */
 	for (size_t i = 0; i < size; i++) {
 		if (i % 2 == 0)
 			cr_assert(eq(chr, *(size_t *)gveci_get(&v, i), max));

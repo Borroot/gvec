@@ -1,4 +1,4 @@
-#include "gvec_insitu.h"
+#include "gvec.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <assert.h>
@@ -34,14 +34,3 @@ gveci_set(gveci *v, size_t index, void *element) {
 	for (size_t offset = 0; offset < v->bytes; offset++)
 		v->buffer[index * v->bytes + offset] = ((char *)element)[offset];
 }
-
-void *
-gveci_pop(gveci *);
-
-	/*v->buffer = reallocarray(&v->buffer, index, v->bytes);*/
-
-	/*if (v->buffer == NULL)*/
-	/*    return ENOMEM;*/
-
-void
-gveci_push(gveci *, void *element);
